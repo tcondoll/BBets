@@ -1,6 +1,6 @@
 ---
 title: "Brownlows Bets"
-author: "Your Name Goes Here"
+author: "Taelynn Condoll"
 output: 
   html_document:
     number_sections: true
@@ -36,33 +36,120 @@ There are 3 questions and there should be at least 3 separate commits, at least 
 
 The function will be given a class_size by number of students, odds, and Number_of_times brownlow made the bet.  It will give you back how much Brownlows earnings were. We will use it to answer our three questions below. If you can, improve this function by giving default values to some of its inputs. 
 
+## return with 35 students, 2:1 paid out
+
+```{r}
+urn = 1:365
+
+
+saveBank = vector('numeric')
+
+
+for(k in 1:40){
+ bank=0
+for (i in 1:637){
+ class = sample(urn, size=35, replace=TRUE)
+ if (length(unique(class))== 35){
+   bank =bank - 2
+ }else{
+   bank = bank + 1
+ }
+}
+saveBank[k] = bank
+}
+
+
+hist(saveBank)
+```
+
+## Question 1 find fair odds
+
+```{r}
+numClass =35
+odds = 4.20
+countoDo = 637
+
+
+saveBank = vector('numeric')
+
+
+for (k in 1:40){
+  bank = (BrLw(numClass,odds,countoDo))
+  saveBank[k] = bank
+}
+print(mean(saveBank))
+hist(saveBank)
+```
+
+To make the game fair, Dr.Brownlow should pay out 'r mean(saveBank).
+
 # In the class and payoff as described  If you highered 40 brownlow substitute teachers to do the same thing that Brownlow did then.
 ## what is their average earnings
 ## the standard deviation and a 95% confidence interval for their earnings?
-  
+
+
+```{r}
+saveBank
+LCL = mean(saveBank) - 2*sd(saveBank)
+UCL = mean(saveBank) + 2*sd(saveBank)
+print(LCL)
+print(UCL)
+sd(saveBank)
+```
+
+
 <!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlows winnings (or losings)-->
 
+When 40 substitutes do this method, the mean is -14. Our standard deviation is 36.57.
 
-# What are the fair odds? Use manipulation of odds in the function to tune Brownlows earnings to zero. 
+# What are the fair odds? Use manipulation of odds in the function to tune Brownlows earnings to zero.
 
+```{r}
+numClass =35
+odds = 4.25
+countoDo = 637
+
+
+saveBank = vector('numeric')
+
+
+for (k in 1:40){
+  bank = (BrLw(numClass,odds,countoDo))
+  saveBank[k] = bank
+}
+print(mean(saveBank))
+hist(saveBank)
+```
 
 <!--Decide on your methods:  In this section explain the approach you will take to attack the issue --- how will you decide on a likely estimate of professor Brownlow's earnings or losses after 637 bets. Also explain how you construct a 95% confidence interval about your estimate of his winnings !-->
 
-
-
+To make a fair bet, Dr.Brownlow will have to make the odds 4.25. Our score is 10.01875 and use `r mean(saveBank)`.
 
 # What size of class makes the 2:1 bet fair?  Use manipulation of number of Students to tune Brownlows earnings to zero.
 
+```{r}
+numClass =28.3
+odds = 2
+countoDo = 637
+
+
+saveBank = vector('numeric')
+
+
+for (k in 1:40){
+  bank = (BrLw(numClass,odds,countoDo))
+  saveBank[k] = bank
+}
+print(mean(saveBank))
+hist(saveBank)
+```
+
 <!--Explain and display the results of your method of coming up with the estimate of professor Brownlows betting profits!-->
 
-
-
-
-
-
-
+The numClass would be 28.3 to get the earnings down to -14 which is the closest number to 0 obtained.
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If professor Brownlow is consistantly making or losing money how could he change his payout so that his profits center on zero?  Also discuss what size his class should be in order to have his current scheme balance at zero profit.!-->
 
+He could change his payout by changing the number of students or the odds ratio. The class size should be 28.3.
